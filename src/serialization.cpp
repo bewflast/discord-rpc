@@ -133,6 +133,19 @@ size_t JsonWriteRichPresenceObj(char* dest,
                     WriteOptionalString(writer, "small_text", presence->smallImageText);
                 }
 
+                if ((presence->buttons[0].label && presence->buttons[0].url) ||
+                    (presence->buttons[1].label && presence->buttons[1].url)) {
+                    WriteArray buttons(writer, "buttons");
+
+                    for (int i = 0; i < 2; i++)
+                        if (presence->buttons[i].label && presence->buttons[i].url) {
+                            WriteObject button1(writer);
+                            WriteOptionalString(writer, "label", presence->buttons[i].label);
+                            WriteOptionalString(writer, "url", presence->buttons[i].url);
+                        }
+                
+                }
+
                 if ((presence->partyId && presence->partyId[0]) || presence->partySize ||
                     presence->partyMax || presence->partyPrivacy) {
                     WriteObject party(writer, "party");
@@ -163,7 +176,6 @@ size_t JsonWriteRichPresenceObj(char* dest,
             }
         }
     }
-
     return writer.Size();
 }
 
