@@ -23,6 +23,11 @@
 extern "C" {
 #endif
 
+typedef struct RPCbutton {
+    const char* label;
+    const char* url;
+} RPCbutton;
+
 typedef struct DiscordRichPresence {
     const char* state;   /* max 128 bytes */
     const char* details; /* max 128 bytes */
@@ -33,6 +38,7 @@ typedef struct DiscordRichPresence {
     const char* smallImageKey;  /* max 32 bytes */
     const char* smallImageText; /* max 128 bytes */
     const char* partyId;        /* max 128 bytes */
+    RPCbutton   buttons[2];
     int partySize;
     int partyMax;
     int partyPrivacy;
